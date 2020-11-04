@@ -17,7 +17,7 @@ using static MicroservicesApi.WebScraperModel;
 
 namespace MicroservicesApi.Controllers
 {
-    [Route(template:"api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class WebScraperController : ControllerBase
     {
@@ -34,6 +34,7 @@ namespace MicroservicesApi.Controllers
         {
             var config = Configuration.Default.WithDefaultLoader();
             var context = BrowsingContext.New(config);
+
             var document = await context.OpenAsync(url);
 
             WebScraperModel mymodel = new WebScraperModel();
@@ -91,7 +92,6 @@ namespace MicroservicesApi.Controllers
 
 
         // GET: api/WebScraper
-        [HttpGet(template:"getdata")]
         public Task<WebScraperModel> Get()
         {
          return CheckForUpdates(websiteUrl);
