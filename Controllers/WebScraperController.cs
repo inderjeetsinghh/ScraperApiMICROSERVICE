@@ -17,7 +17,7 @@ using static MicroservicesApi.WebScraperModel;
 
 namespace MicroservicesApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route(template:"api/[controller]")]
     [ApiController]
     public class WebScraperController : ControllerBase
     {
@@ -79,13 +79,10 @@ namespace MicroservicesApi.Controllers
             return mymodel;
         }
 
-        private async void CheckForUpdates(string url)
+        private  Task<WebScraperModel> CheckForUpdates(string url)
         {
-            // We create the container for the data we want
-            List<dynamic> adverts = new List<dynamic>();
-
             
-            await GetPageData(url);
+            return  GetPageData(url);
 
             // TODO: Diff the data
         }
@@ -94,11 +91,11 @@ namespace MicroservicesApi.Controllers
 
 
         // GET: api/WebScraper
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet(template:"getdata")]
+        public Task<WebScraperModel> Get()
         {
-            CheckForUpdates(websiteUrl);
-            return new string[] { "value1", "value2" };
+         return CheckForUpdates(websiteUrl);
+            //return new string[] { "value1", "value2" };
         }
 
         // GET: api/WebScraper/5
